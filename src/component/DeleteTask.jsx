@@ -1,8 +1,8 @@
-export const DeleteToDo = ({ taskName, id, deleteTask }) => {
+export const DeleteToDo = (props) => {
   return (
-    <>
-      <span>{taskName}</span>
-      <button className="delete-btn" onClick={() => deleteTask(id)}>Delete</button>
-    </>
-  );
+    <div>
+  <h1>{props.taskName}</h1>
+  <button onClick={() => props.deleteTask(props.id)}>Delete</button>
+ </div>
+ );
 };

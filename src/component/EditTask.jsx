@@ -1,31 +1,40 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 
-export const EditTask = ({ task, todoList, setTodoList }) => {
+export const EditTask = (props) => {
+  const [newTaskName, setNewTaskName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [newName, setNewName] = useState(task.task);
 
-  const handleEdit = () => {
+  const handleEditClick = () => {
+    setNewTaskName(""); 
     setIsEditing(true);
   };
 
-  const saveEdit = () => {
-    const updatedList = todoList.map((item) =>
-      item.id === task.id ? { ...item, task: newName } : item
-    );
-    setTodoList(updatedList);
+  const handleSave = () => {
+      if (newTaskName.trim() === "") {
+    alert("Enter the name you want to replace");
+    return;
+  }
+
+      props.editTask(props.id, { task: newTaskName });
+    
     setIsEditing(false);
   };
 
-  return isEditing ? (
-    <>
-      <input
-        value={newName}
-        onChange={(e) => setNewName(e.target.value)}
-        style={{ marginRight: "0.5rem" }}
-      />
-      <button className="edit-btn" onClick={saveEdit}>Save</button>
-    </>
-  ) : (
-    <button className="edit-btn" onClick={handleEdit}>Edit</button>
+  return (
+    <div className="edit-task">
+      {isEditing ? (
+        <div>
+
+          <input
+            type="text"
+            value={newTaskName}
+            onChange={(e) => setNewTaskName(e.target.value)}
+          />
+          <button onClick={handleSave}>Save</button>
+        </div>
+      ) : (
+        <button onClick={handleEditClick}>Edit</button>
+      )}
+    </div>
   );
 };
